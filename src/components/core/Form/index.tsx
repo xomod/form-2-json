@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Field } from "../index";
-import { Button, IconButton, Input, TextField, Typography } from '@material-ui/core';
+import { Button, IconButton, TextField, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import Flex from '../../utils/Flex';

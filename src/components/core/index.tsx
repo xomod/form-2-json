@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import Flex from '../utils/Flex';
 import Form from './Form';
 import Output from './Output';
-import { useLittera } from "react-littera";
-import { Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import { makeTarget } from "../../utils/methods";
 
@@ -12,14 +10,6 @@ const useStyles = makeStyles((theme) => ({
         minHeight: `${window.innerHeight - 64}px`
     }
 }))
-
-const translations = {
-    title: {
-        en_US: "Form to JSON",
-        pl_PL: "Formularz do JSON",
-        de_DE: "Formular zur JSON"
-    }
-};
 
 export type Field = { value: string | number, target: string, label: string, type: "string" | "number" }
 
@@ -32,7 +22,6 @@ const INITIAL_STATE: Field[] = [
 
 function Core() {
     const classes = useStyles();
-    const translated = useLittera(translations);
     const [fields, setFields] = useState(INITIAL_STATE);
     
     const getField = (target: Field["target"]) => {
