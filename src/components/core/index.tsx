@@ -44,7 +44,14 @@ function Core() {
         )
     }
     const addField = (label: Field["label"], type: Field["type"], initialValue: Field["value"] = "") => {
-        setFields(_fields => ([...fields, { label, target: makeTarget(label), value: initialValue, type }]));
+        setFields(_fields => {
+            if(_fields.find(field => makeTarget(label) === field.target)) {
+                alert("Field already exists!");
+                return _fields;
+            }
+
+            return ([..._fields, { label, target: makeTarget(label), value: initialValue, type }])
+        } );
     }
     const removeField = (target: Field["target"]) => {
         setFields(_fields => _fields.filter(field => field.target !== target));
