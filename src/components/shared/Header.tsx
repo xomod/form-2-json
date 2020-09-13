@@ -31,8 +31,6 @@ const translations = {
     },
 };
 
-const LOCALES_MAP: {[key: string]: string} = {en_US: "English", de_DE: "Deutsch", pl_PL: "Polski"}
-
 function Core() {
     const translated = useLittera(translations);
     const { locale, locales, setLocale } = useLitteraMethods();
