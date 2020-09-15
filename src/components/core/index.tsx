@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Flex from '../utils/Flex';
 import Form from './Form';
 import Output from './Output';
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles } from "@material-ui/styles"
 import { makeTarget } from "../../utils/methods";
 
 const useStyles = makeStyles((theme) => ({
@@ -11,14 +11,40 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export type Field = { value: string | number, target: string, label: string, type: "string" | "number" }
+export type Field = { value: FieldType, target: string, label: string, type: FieldTypeLiteral }
+export type FieldType = string | number | boolean;
+export type FieldTypeLiteral = "string" | "number" | "boolean";
 
 const INITIAL_STATE: Field[] = [
     { value: "Foo", target: "first_name", label: "First name", type: "string" },
     { value: "Bar", target: "last_name", label: "Last name", type: "string" },
     { value: "https://lol.com/url.jpg", target: "image", label: "Image", type: "string" },
-    { value: 18, target: "age", label: "Age", type: "number" }
+    { value: 18, target: "age", label: "Age", type: "number" },
+    { value: true, target: "bored", label: "Bored", type: "boolean" },
 ]
+
+type FieldTypeOption = { value: FieldTypeLiteral, label: string }
+export const FIELD_TYPE_OPTIONS: FieldTypeOption[] = [
+    {
+        value: 'string',
+        label: 'Text',
+    },
+    {
+        value: 'number',
+        label: 'Number',
+    },
+    {
+        value: "boolean",
+        label: "Boolean"
+    }
+];
+
+type FieldTypeDefault = { [key in FieldTypeLiteral]: FieldType }
+export const FIELD_TYPE_DEFAULTS_MAP: FieldTypeDefault = {
+    boolean: false,
+    number: 0,
+    string: ""
+}
 
 function Core() {
     const classes = useStyles();

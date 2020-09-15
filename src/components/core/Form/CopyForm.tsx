@@ -4,10 +4,10 @@ import { Field } from "..";
 import Flex from "../../utils/Flex";
 import copy from "copy-to-clipboard";
 import { tryPasteJSON } from "../../../utils/methods";
+import { useSnackbar } from "notistack";
 
 import CopyIcon from '@material-ui/icons/FileCopy';
 import PasteIcon from '@material-ui/icons/Assignment';
-import { useSnackbar } from "notistack";
 
 const CopyForm = (props: { fields: Field[], overwriteFields: (value: Field[]) => void }) => {
     const { enqueueSnackbar } = useSnackbar();

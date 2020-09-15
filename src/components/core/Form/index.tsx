@@ -1,23 +1,13 @@
 import React, { useState } from 'react';
-import { Field } from "../index";
-import { Button, IconButton, TextField, Typography } from '@material-ui/core';
+import { Field, FIELD_TYPE_DEFAULTS_MAP } from "../index";
+import { IconButton, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import Flex from '../../utils/Flex';
-import MenuItem from '@material-ui/core/MenuItem';
 import CopyForm from './CopyForm';
+import { NewFieldForm } from './NewFieldForm';
+import FieldInput from './FieldInputs';
 
-const typeSelectionOptions = [
-  {
-    value: 'string',
-    label: 'Text',
-  },
-  {
-    value: 'number',
-    label: 'Number',
-  },
-];
-  
 const useStyles = makeStyles((theme) => ({
   root: {
 
@@ -39,7 +29,7 @@ function Form(props: FormProps ) {
   const [newFieldType, setNewFieldType] = useState<Field["type"]>("string");
   const classes = useStyles();
 
-  const handleChange = (target: Field["target"]) => (event: any) => {
+  const handleChange = (target: Field["target"]) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event?.target?.value ?? "";
     props.setField(target, value);
   }
@@ -47,7 +37,7 @@ function Form(props: FormProps ) {
   const handleNewFieldValueChange = (event: any) => setNewFieldName(event?.target?.value ?? "")
   const handleFieldAddition = () => {
     if(newFieldName && newFieldType && !props.fields.find(field => field.target === newFieldName)) {
-      props.addField(newFieldName, newFieldType, getInitialValueByType(newFieldType));
+      props.addField(newFieldName, newFieldType, FIELD_TYPE_DEFAULTS_MAP[newFieldType]);
       setNewFieldName("");
     }
   }
@@ -68,7 +58,8 @@ function Form(props: FormProps ) {
         {
           props.fields.map(field => {
             return <Flex alignItems="center" justifyContent="space-between" width="100%">
-              <TextField type={field.type === "number" ? "number" : "text"} style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px", width: "85%"}} value={field.value} onChange={handleChange(field.target)} id={field.target} key={field.target} label={field.label} variant="outlined" />
+              <FieldInput field={field} onChange={handleChange(field.target)} />
+              {/* <TextField type={field.type === "number" ? "number" : "text"} style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px", width: "85%"}} value={field.value} onChange={handleChange(field.target)} id={field.target} key={field.target} label={field.label} variant="outlined" /> */}
               <IconButton aria-label="delete" onClick={() => props.removeField(field.target)}><DeleteIcon /></IconButton>
             </Flex>
           })
@@ -76,37 +67,10 @@ function Form(props: FormProps ) {
       </Flex>
     </form>
 
-    <Flex alignItems="center" justifyContent="flex-start" width="100%" >
-      <TextField label="New field label" style={{flex: 2}} value={newFieldName} variant="filled" onChange={handleNewFieldValueChange} />
-      
-      
-      <TextField
-        style={{flex: 1, margin: "0 10px"}}
-        id="standard-select-type"
-        select
-        label="Field type"
-        value={newFieldType}
-        onChange={handleNewFieldTypeChange}
-        variant="filled"
-      >
-        {typeSelectionOptions.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
-      
-      <Button style={{height: "56px", flex: 1}} variant="outlined" onClick={handleFieldAddition}>Add field</Button>
-    </Flex>
+      <NewFieldForm newFieldName={newFieldName} handleNewFieldValueChange={handleNewFieldValueChange} newFieldType={newFieldType} handleNewFieldTypeChange={handleNewFieldTypeChange} handleFieldAddition={handleFieldAddition} />
 
     </div>
   );
-}
-
-function getInitialValueByType(type: Field["type"]) {
-  if(type === "number") return 0;
-
-  return ""; // For "string" option.
 }
 
 export default Form;
