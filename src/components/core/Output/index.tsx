@@ -1,4 +1,5 @@
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
+import { makeStyles } from "@material-ui/styles";
 import React from 'react';
 import { Field } from '..';
 import copy from "copy-to-clipboard";
@@ -27,7 +28,7 @@ function Output(props: {fields: Field[]}) {
         props.fields.map(field => <p key={field.target}>{field.target}: {field.value}</p>)
       } */}
       <pre className={classes.pre}>{JSON.stringify(makeJSON(props.fields), null, 2)}</pre>
-      <Button variant="contained" onClick={handleCopy}>Copy</Button>
+      <Button variant="outlined" onClick={handleCopy}>Copy</Button>
     </div>
   );
 }

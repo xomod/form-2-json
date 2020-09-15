@@ -5,6 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import Flex from '../../utils/Flex';
 import MenuItem from '@material-ui/core/MenuItem';
+import CopyForm from './CopyForm';
 
 const typeSelectionOptions = [
   {
@@ -30,6 +31,7 @@ type FormProps = {
   setField: (target: Field["target"], value: Field["value"]) => void;
   addField: (label: Field["label"], type: Field["type"], initialValue?: Field["value"]) => void;
   removeField: (target: Field["target"]) => void;
+  overwriteFields: (value: Field[]) => void;
 }
 
 function Form(props: FormProps ) {
@@ -56,7 +58,10 @@ function Form(props: FormProps ) {
 
   return (
     <div style={{width: "30%", backgroundColor: "#eee", padding: "20px 30px", flex: 1, height: "calc(100vh - 104px)"}}>
-    <Typography variant="h4">Form</Typography>
+      <Flex alignItems="center" justifyContent="space-between">
+      <Typography variant="h4">Form</Typography>
+        <CopyForm fields={props.fields} overwriteFields={props.overwriteFields} />
+      </Flex>
     <form className={classes.root} noValidate autoComplete="off">
       {/* <TextField value={props.firstNameValue} onChange={handleFirstNameValueChange} id="outlined-basic" label="Outlined" variant="outlined" /> */}
       <Flex flexDirection="column" width="100%">

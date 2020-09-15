@@ -45,11 +45,14 @@ function Core() {
     const removeField = (target: Field["target"]) => {
         setFields(_fields => _fields.filter(field => field.target !== target));
     }
+    const overwriteFields = (value: Field[]) => {
+        setFields(value);
+    }
 
     return (
         <div className={classes.root}>
             <Flex alignItems="flex-start" height="100%">
-                <Form fields={fields} setField={setField} getField={getField} addField={addField} removeField={removeField} />
+                <Form fields={fields} setField={setField} getField={getField} addField={addField} removeField={removeField} overwriteFields={overwriteFields} />
                 <Output fields={fields} />
             </Flex>
         </div>

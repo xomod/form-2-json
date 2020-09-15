@@ -14,3 +14,15 @@ export function makeJSON(fields: Field[]) {
 
     return json;
 }
+
+export const tryPasteJSON = async (): Promise<Field[] | null> => {
+    const raw_content = await navigator.clipboard.readText();
+
+    try {
+        const content = JSON.parse(raw_content) as Field[];
+        return content;
+    } catch (err) {
+        console.error(err)
+        return null;
+    }
+}
