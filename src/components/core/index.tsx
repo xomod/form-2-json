@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export type Field = { value: FieldType, target: string, label: string, type: FieldTypeLiteral }
-export type FieldType = string | number | boolean;
-export type FieldTypeLiteral = "string" | "number" | "boolean";
+export type FieldType = string | number | boolean | FieldType[];
+export type FieldTypeLiteral = "string" | "number" | "boolean" | "array";
 
 const INITIAL_STATE: Field[] = [
     { value: "Foo", target: "first_name", label: "First name", type: "string" },
@@ -21,6 +21,7 @@ const INITIAL_STATE: Field[] = [
     { value: "https://lol.com/url.jpg", target: "image", label: "Image", type: "string" },
     { value: 18, target: "age", label: "Age", type: "number" },
     { value: true, target: "bored", label: "Bored", type: "boolean" },
+    { value: ["01", "02"], target: "labs", label: "Labs", type: "array" },
 ]
 
 type FieldTypeOption = { value: FieldTypeLiteral, label: string }
@@ -36,6 +37,10 @@ export const FIELD_TYPE_OPTIONS: FieldTypeOption[] = [
     {
         value: "boolean",
         label: "Boolean"
+    },
+    {
+        value: "array",
+        label: "Array"
     }
 ];
 
@@ -43,7 +48,8 @@ type FieldTypeDefault = { [key in FieldTypeLiteral]: FieldType }
 export const FIELD_TYPE_DEFAULTS_MAP: FieldTypeDefault = {
     boolean: false,
     number: 0,
-    string: ""
+    string: "",
+    array: [],
 }
 
 function Core() {
