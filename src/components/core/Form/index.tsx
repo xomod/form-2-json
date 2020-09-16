@@ -1,19 +1,50 @@
 import React, { useState } from 'react';
-import { Field, FIELD_TYPE_DEFAULTS_MAP } from "../index";
-import { IconButton, Typography } from '@material-ui/core';
+import { Field, FIELD_TYPE_DEFAULTS_MAP, FIELD_TYPE_ICONS } from "../index";
+import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/styles';
 import Flex from '../../utils/Flex';
 import CopyForm from './CopyForm';
 import { NewFieldForm } from './NewFieldForm';
 import FieldInput from './FieldInputs';
+import { ITranslationsPreset, useLittera } from 'react-littera';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-
+    backgroundColor: "#eee",
+    padding: "20px 30px",
+    flex: 1,
+    height: "calc(100vh - 104px)",
   },
+  fieldRoot: {
+    "&> span": {
+      opacity: 0,
+      transition: "opacity 255ms ease"
+    },
+    "&:hover": {
+      "&> span": {
+        opacity: 1,
+        transition: "opacity 255ms ease"
+      }
+    }
+  },
+  form: {
+    flex: 1,
+    overflowY: "scroll"
+  }
 }));
 
+const translations = (preset: ITranslationsPreset) => ({
+  title: {
+    en_US: "Form",
+    pl_PL: "Formularz",
+    de_DE: "Formular",
+  },
+  string: preset.string,
+  number: preset.number,
+  boolean: preset.boolean,
+  array: preset.array,
+})
 
 type FormProps = { 
   fields:   Field[];
@@ -28,6 +59,7 @@ function Form(props: FormProps ) {
   const [newFieldName, setNewFieldName] = useState("");
   const [newFieldType, setNewFieldType] = useState<Field["type"]>("string");
   const classes = useStyles();
+  const translated = useLittera(translations)
 
   const handleChange = (target: Field["target"]) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event?.target?.value ?? "";
@@ -47,20 +79,19 @@ function Form(props: FormProps ) {
   };
 
   return (
-    <div style={{width: "30%", backgroundColor: "#eee", padding: "20px 30px", flex: 1, height: "calc(100vh - 104px)"}}>
+    <Flex flexDirection="column" justifyContent="space-between" className={classes.root}>
       <Flex alignItems="center" justifyContent="space-between">
-      <Typography variant="h4">Form</Typography>
+        <Typography variant="h4">{translated.title}</Typography>
         <CopyForm fields={props.fields} overwriteFields={props.overwriteFields} />
       </Flex>
-    <form className={classes.root} noValidate autoComplete="off">
-      {/* <TextField value={props.firstNameValue} onChange={handleFirstNameValueChange} id="outlined-basic" label="Outlined" variant="outlined" /> */}
+      <form className={classes.form} noValidate autoComplete="off">
       <Flex flexDirection="column" width="100%">
         {
           props.fields.map(field => {
-            return <Flex alignItems="center" justifyContent="space-between" width="100%">
+            return <Flex className={classes.fieldRoot} key={field.label + field.target} alignItems="center" justifyContent="space-between" width="100%">
+              <Tooltip title={translated[field.type]}>{FIELD_TYPE_ICONS[field.type]}</Tooltip>
               <FieldInput field={field} onChange={handleChange(field.target)} />
-              {/* <TextField type={field.type === "number" ? "number" : "text"} style={{marginTop: "20px", marginBottom: "20px", marginRight: "10px", width: "85%"}} value={field.value} onChange={handleChange(field.target)} id={field.target} key={field.target} label={field.label} variant="outlined" /> */}
-              <IconButton aria-label="delete" onClick={() => props.removeField(field.target)}><DeleteIcon /></IconButton>
+              <span><IconButton aria-label="delete" onClick={() => props.removeField(field.target)}><DeleteIcon /></IconButton></span>
             </Flex>
           })
         }
@@ -69,7 +100,7 @@ function Form(props: FormProps ) {
 
       <NewFieldForm newFieldName={newFieldName} handleNewFieldValueChange={handleNewFieldValueChange} newFieldType={newFieldType} handleNewFieldTypeChange={handleNewFieldTypeChange} handleFieldAddition={handleFieldAddition} />
 
-    </div>
+    </Flex>
   );
 }
 

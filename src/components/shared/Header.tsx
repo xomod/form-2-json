@@ -5,9 +5,9 @@ import Flex from "../utils/Flex";
 
 const translations = {
     title: {
-        en_US: "Form to JSON",
-        pl_PL: "Formularz do JSON",
-        de_DE: "Formular zur JSON"
+        en_US: "form-2-json", //"Form to JSON",
+        pl_PL: "form-2-json", //"Formularz do JSON",
+        de_DE: "form-2-json", //"Formular zur JSON"
     },
     language: {
         en_US: "Language",
@@ -42,7 +42,7 @@ function Core() {
     return (
         <div style={{ flex: 1, backgroundColor: "#eee", padding: "10px 20px" }}>
             <Flex justifyContent="space-between" alignItems="center">
-                <Typography variant="h3" gutterBottom>{translated.title}</Typography>
+                <Typography variant="h4" style={{ opacity: 0.15, fontWeight: "bold" }} gutterBottom>{translated.title.toLowerCase()}</Typography>
                 <Flex>
                     <TextField
                         style={{flex: 1, margin: "0 10px"}}

@@ -8,16 +8,41 @@ import { useSnackbar } from "notistack";
 
 import CopyIcon from '@material-ui/icons/FileCopy';
 import PasteIcon from '@material-ui/icons/Assignment';
+import { useLittera } from "react-littera";
+
+const translations = {
+    copySuccess: {
+        en_US: "Form template copied to clipboard",
+        pl_PL: "Szablon formularza skopiowany do schowka",
+        de_DE: "Formularvorlage in Zwischenablage kopiert",
+    },
+    copyError: {
+        en_US: "Couldn't copy to clipboard",
+        pl_PL: "Nie udało się skopiować do schowka",
+        de_DE: "In die Zwischenablage konnte nicht kopiert werden",
+    },
+    pasteSuccess: {
+        en_US: "Form template pasted from clipboard",
+        pl_PL: "Szablon formularza wklejony ze schowka",
+        de_DE: "Formularvorlage aus der Zwischenablage eingefügt",
+    },
+    pasteError: {
+        en_US: "Couldn't paste from clipboard",
+        pl_PL: "Nie udało się wkleić ze schowka",
+        de_DE: "Konnte nicht aus der Zwischenablage eingefügt werden",
+    },
+}
 
 const CopyForm = (props: { fields: Field[], overwriteFields: (value: Field[]) => void }) => {
+    const translated = useLittera(translations);
     const { enqueueSnackbar } = useSnackbar();
 
     const handleCopy = () => {
         try {
             copy(JSON.stringify(props.fields));
-            enqueueSnackbar("Form template copied to clipboard", { variant: 'info' });
+            enqueueSnackbar(translated.copySuccess, { variant: 'info' });
         } catch (err) {
-            enqueueSnackbar("Couldn't copy to clipboard", { variant: 'error' });
+            enqueueSnackbar(translated.copyError, { variant: 'error' });
         }
     }
 
@@ -26,15 +51,15 @@ const CopyForm = (props: { fields: Field[], overwriteFields: (value: Field[]) =>
 
         if (value !== null && Array.isArray(value)) {
             props.overwriteFields(value);
-            enqueueSnackbar("Form template pasted from clipboard", { variant: 'info' });
+            enqueueSnackbar(translated.pasteSuccess, { variant: 'info' });
         } else {
-            enqueueSnackbar("Couldn't paste from clipboard", { variant: 'error' });
+            enqueueSnackbar(translated.pasteError, { variant: 'error' });
         }
     }
 
     return <Flex alignItems="center" justifyContent="flex-end">
-        <IconButton onClick={handleCopy} ><CopyIcon /></IconButton>
-        <IconButton onClick={handlePaste}><PasteIcon /></IconButton>
+        <IconButton onClick={handleCopy} color="primary" ><CopyIcon /></IconButton>
+        <IconButton onClick={handlePaste} color="primary"><PasteIcon /></IconButton>
     </Flex>
 }
 

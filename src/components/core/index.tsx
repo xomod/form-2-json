@@ -5,9 +5,15 @@ import Output from './Output';
 import { makeStyles } from "@material-ui/styles"
 import { makeTarget } from "../../utils/methods";
 
+import StringIcon from "@material-ui/icons/TextFields";
+import NumberIcon from "@material-ui/icons/Dialpad";
+import BooleanIcon from "@material-ui/icons/Cached";
+import ArrayIcon from "@material-ui/icons/Reorder";
+
 const useStyles = makeStyles((theme) => ({
     root: {
-        minHeight: `${window.innerHeight - 64}px`
+        position: "relative",
+        height: `calc(100vh - 76px)`,
     }
 }))
 
@@ -43,6 +49,18 @@ export const FIELD_TYPE_OPTIONS: FieldTypeOption[] = [
         label: "Array"
     }
 ];
+
+const defaultTypeIconProps = {
+    size: "16px",
+    style: { marginRight: "10px" }
+}
+type FieldTypeIcons = { [key in FieldTypeLiteral]: JSX.Element }
+export const FIELD_TYPE_ICONS: FieldTypeIcons = {
+    string: <StringIcon     {...defaultTypeIconProps} />,
+    number: <NumberIcon     {...defaultTypeIconProps} />,
+    boolean: <BooleanIcon    {...defaultTypeIconProps} />,
+    array: <ArrayIcon      {...defaultTypeIconProps} />
+}
 
 type FieldTypeDefault = { [key in FieldTypeLiteral]: FieldType }
 export const FIELD_TYPE_DEFAULTS_MAP: FieldTypeDefault = {

@@ -1,11 +1,21 @@
 import { TextField } from "@material-ui/core";
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import React from "react";
+import { useLittera } from "react-littera";
 import { Field } from "../..";
 
 const filter = createFilterOptions<OptionType>();
 
+const translations = {
+    add: (value: string) => ({
+        en_US: `Add '${value}'`,
+        pl_PL: `Dodaj '${value}'`,
+        de_DE: `'${value}' hinzufügen`
+    }),
+}
+
 const ArrayInput = ({ field, onChange }: { field: Field, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void }) => {
+    const translated = useLittera(translations);
 
     return <Autocomplete
         multiple
@@ -20,7 +30,7 @@ const ArrayInput = ({ field, onChange }: { field: Field, onChange: (event: React
             if (params.inputValue !== '') {
                 filtered.push({
                     inputValue: params.inputValue,
-                    title: `Add "${params.inputValue}"`,
+                    title: translated.add(params.inputValue),
                 });
             }
 
