@@ -42,7 +42,7 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <SnackbarProvider maxSnack={3}>
-          <LitteraProvider preset={preset} initialLocale="pl_PL" locales={["en_US", "pl_PL", "de_DE"]}>
+          <LitteraProvider detectLocale preset={preset} initialLocale="pl_PL" locales={["en_US", "pl_PL", "de_DE"]}>
             <Header />
             <Core />
           </LitteraProvider>
