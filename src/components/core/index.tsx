@@ -10,6 +10,8 @@ import NumberIcon from "@material-ui/icons/Dialpad";
 import BooleanIcon from "@material-ui/icons/Cached";
 import ArrayIcon from "@material-ui/icons/Reorder";
 
+import { Field, FieldTypeDefault, FieldTypeIcons, FieldTypeOption } from "./index.d";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         position: "relative",
@@ -17,9 +19,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export type Field = { value: FieldType, target: string, label: string, type: FieldTypeLiteral }
-export type FieldType = string | number | boolean | FieldType[];
-export type FieldTypeLiteral = "string" | "number" | "boolean" | "array";
+
 
 const INITIAL_STATE: Field[] = [
     { value: "Foo", target: "first_name", label: "First name", type: "string" },
@@ -30,7 +30,6 @@ const INITIAL_STATE: Field[] = [
     { value: ["01", "02"], target: "labs", label: "Labs", type: "array" },
 ]
 
-type FieldTypeOption = { value: FieldTypeLiteral, label: string }
 export const FIELD_TYPE_OPTIONS: FieldTypeOption[] = [
     {
         value: 'string',
@@ -54,7 +53,6 @@ const defaultTypeIconProps = {
     size: "16px",
     style: { marginRight: "10px" }
 }
-type FieldTypeIcons = { [key in FieldTypeLiteral]: JSX.Element }
 export const FIELD_TYPE_ICONS: FieldTypeIcons = {
     string: <StringIcon     {...defaultTypeIconProps} />,
     number: <NumberIcon     {...defaultTypeIconProps} />,
@@ -62,7 +60,6 @@ export const FIELD_TYPE_ICONS: FieldTypeIcons = {
     array: <ArrayIcon      {...defaultTypeIconProps} />
 }
 
-type FieldTypeDefault = { [key in FieldTypeLiteral]: FieldType }
 export const FIELD_TYPE_DEFAULTS_MAP: FieldTypeDefault = {
     boolean: false,
     number: 0,

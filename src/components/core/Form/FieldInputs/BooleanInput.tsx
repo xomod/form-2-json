@@ -1,7 +1,7 @@
 import { MenuItem, TextField } from "@material-ui/core";
 import React from "react";
 import { useLittera } from "react-littera";
-import { Field } from "../..";
+import { Field } from "../../index.d";
 
 const translations = {
     true: {

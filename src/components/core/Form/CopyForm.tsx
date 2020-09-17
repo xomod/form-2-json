@@ -1,6 +1,6 @@
 import { IconButton } from "@material-ui/core";
 import React from "react";
-import { Field } from "..";
+import { Field } from "../index.d";
 import Flex from "../../utils/Flex";
 import copy from "copy-to-clipboard";
 import { tryPasteJSON } from "../../../utils/methods";

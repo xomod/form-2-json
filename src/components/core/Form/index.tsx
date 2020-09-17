@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Field, FIELD_TYPE_DEFAULTS_MAP, FIELD_TYPE_ICONS } from "../index";
+import { FIELD_TYPE_DEFAULTS_MAP, FIELD_TYPE_ICONS } from "../index";
+import { Field } from "../index.d";
+import { FormProps } from "./index.d";
 import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/styles';
@@ -46,20 +48,14 @@ const translations = (preset: ITranslationsPreset) => ({
   array: preset.array,
 })
 
-type FormProps = { 
-  fields:   Field[];
-  getField: (target: Field["target"]) => Field | undefined;
-  setField: (target: Field["target"], value: Field["value"]) => void;
-  addField: (label: Field["label"], type: Field["type"], initialValue?: Field["value"]) => void;
-  removeField: (target: Field["target"]) => void;
-  overwriteFields: (value: Field[]) => void;
-}
-
-function Form(props: FormProps ) {
-  const [newFieldName, setNewFieldName] = useState("");
-  const [newFieldType, setNewFieldType] = useState<Field["type"]>("string");
+function Form(props: FormProps) {
   const classes = useStyles();
   const translated = useLittera(translations)
+
+  // Field addition variables.
+  const [newFieldName, setNewFieldName] = useState("");
+  const [newFieldType, setNewFieldType] = useState<Field["type"]>("string");
+
 
   const handleChange = (target: Field["target"]) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event?.target?.value ?? "";
