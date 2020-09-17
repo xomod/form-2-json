@@ -1,6 +1,6 @@
 import { Message } from "@material-ui/icons";
 import React from "react";
-import { Field } from "../..";
+import { Field } from "../../index.d";
 
 import ArrayInput from "./ArrayInput";
 import BooleanInput from "./BooleanInput";

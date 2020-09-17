@@ -1,4 +1,4 @@
-import { Field } from "../components/core";
+import { Field } from "../components/core/index.d";
 
 export function makeTarget(label: Field["label"]) {
     return label.toLowerCase().replace(/ /g, "_"); // eg. First name => first_name

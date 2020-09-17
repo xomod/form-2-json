@@ -2,7 +2,7 @@ import { TextField } from "@material-ui/core";
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import React from "react";
 import { useLittera } from "react-littera";
-import { Field } from "../..";
+import { Field } from "../../index.d";
 
 const filter = createFilterOptions<OptionType>();
 
